@@ -3,13 +3,11 @@
 import { program } from "commander";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { simpleGit } from 'simple-git';
-import { fs } from 'fs';
-
+import { simpleGitPromise } from 'simple-git/promise';
+import { shellJs } from 'shelljs'
 
 const gitBaseUrl = 'https://api.github.com';
 program.version("1.0.0").description("App Server Scaffolder")
-
 
 program.action(() => {
   console.log(chalk.greenBright('Starting App Server Scaffolder...'))
@@ -43,7 +41,7 @@ program.action(() => {
       console.log(chalk.greenBright(`Public repo ${answers.pRepoName} has been created.`));
       const repoURL = `https://github.com/rhinton1/${answers.pRepoName}.git`;
 
-
+      executeInitialPush(repoURL);
 
     });
   } catch (error) {
@@ -53,7 +51,7 @@ program.action(() => {
 
 program.parse(process.argv);
 
-async function createGitRepo(repo) {
+function createGitRepo(repo) {
   return new Promise((resolve) => {
     resolve(
       fetch(
@@ -75,5 +73,38 @@ async function createGitRepo(repo) {
       )
     )    
   })
+}
+
+function executeInitialPush(repoUrl){
+  shellJs.cd('./temp_folder');
+
+  simpleGitPromise.addRemote('origin', repoUrl);
+
+  simpleGitPromise.add('.')
+    .then(
+      (addSuccess) => {
+        console.log(addSuccess);
+      }, (failedAdd) => {
+        console.log(chalk.redBright('adding files failed'));
+      }
+    );
+
+  simpleGitPromise.commit('Intial commit')
+   .then(
+      (successCommit) => {
+        console.log(successCommit);
+      }, (failed) => {
+        console.log(chalk.redBright('failed commmit'));
+      }
+    );
+
+  simpleGitPromise.push('origin','master')
+    .then(
+      (success) => {
+       console.log(chalk.greenBright('repo successfully pushed'));
+      },(failed)=> {
+        console.log(chalk.redBright('repo push failed'));
+      }
+    );
 }
 
