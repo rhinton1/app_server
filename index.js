@@ -4,10 +4,12 @@ import { program } from "commander";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { simpleGit } from 'simple-git';
+import { fs } from 'fs';
 
 
 const gitBaseUrl = 'https://api.github.com';
 program.version("1.0.0").description("App Server Scaffolder")
+
 
 program.action(() => {
   console.log(chalk.greenBright('Starting App Server Scaffolder...'))
@@ -59,7 +61,7 @@ async function createGitRepo(repo) {
         {
           method: 'POST',
           headers: {
-            "authorization": `Bearer ${Token}`
+            "authorization": `Bearer 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`
           },
           body: JSON.stringify({
             "name": repo,
