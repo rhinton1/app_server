@@ -59,7 +59,7 @@ async function createGitRepo(repo) {
         {
           method: 'POST',
           headers: {
-            "authorization": 'Bearer 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'
+            "authorization": `Bearer ${Token}`
           },
           body: JSON.stringify({
             "name": repo,
