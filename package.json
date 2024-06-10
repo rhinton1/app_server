@@ -1,0 +1,21 @@
+{
+  "name": "app_server_scaffolder",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "app_server_scaffolder": "./index.js"
+  },
+  "description": "provisions a generic backend nodejs server in github",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ron Hinton",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^9.2.23",
+    "simple-git": "^3.24.0"
+  }
+}
